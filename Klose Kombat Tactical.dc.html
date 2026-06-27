@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { background: #000; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; scroll-behavior: smooth; }
+    a { text-decoration: none; color: inherit; }
+    .kkt-cta-shine { position: relative; isolation: isolate; overflow: hidden; }
+    .kkt-cta-shine::after {
+      content: "";
+      position: absolute;
+      top: -80%;
+      left: -45%;
+      width: 42%;
+      height: 260%;
+      background: linear-gradient(115deg, transparent 0%, rgba(255,255,255,0.08) 35%, rgba(255,255,255,0.42) 50%, rgba(255,255,255,0.08) 65%, transparent 100%);
+      transform: translateX(-170%) skewX(-18deg);
+      transition: transform 0.7s ease;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .kkt-cta-shine:hover::after { transform: translateX(430%) skewX(-18deg); }
+    .kkt-slider-track { will-change: transform; transition: transform 0.42s cubic-bezier(0.22, 0.61, 0.36, 1); }
+    .kkt-product-card { min-width: calc((100% - 8px) / 4); width: calc((100% - 8px) / 4); }
+    .kkt-accent-switch {
+      position: fixed;
+      right: 22px;
+      bottom: 22px;
+      z-index: 500;
+      background: var(--kkt-accent);
+      border: 1px solid rgba(255,255,255,0.45);
+      color: var(--kkt-accent-contrast);
+      padding: 12px 16px;
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 16px 38px rgba(0,0,0,0.42);
+    }
+    .kkt-art { position: absolute; inset: 0; overflow: hidden; background: #050505; }
+    @media (max-width: 768px) {
+      .kkt-nav-links  { display: none !important; }
+      .kkt-hamburger  { display: flex !important; }
+      .kkt-trust-grid { grid-template-columns: repeat(2,1fr) !important; }
+      .kkt-trust-item:nth-child(3) { border-top: 1px solid #1F1F1F; }
+      .kkt-trust-item:nth-child(1),
+      .kkt-trust-item:nth-child(3) { border-right: 1px solid #1F1F1F !important; }
+      .kkt-trust-item:nth-child(2),
+      .kkt-trust-item:nth-child(4) { border-right: none !important; }
+      .kkt-serve-tiles { grid-template-columns: repeat(2,1fr) !important; }
+      .kkt-built-grid  { grid-template-columns: 1fr !important; }
+      .kkt-mission-row { flex-direction: column !important; }
+      .kkt-mission-img { width: 100% !important; min-height: 300px !important; }
+      .kkt-testi-grid  { grid-template-columns: 1fr !important; }
+      .kkt-subscribe-row  { flex-direction: column !important; gap: 12px !important; }
+      .kkt-subscribe-btn  { width: 100% !important; }
+      .kkt-footer-row  { flex-direction: column !important; gap: 40px !important; }
+      .kkt-section     { padding: 64px 24px !important; }
+      .kkt-hero-content { padding: 48px 24px 76px !important; transform: translateY(-2vh) !important; }
+      .kkt-btn-full    { width: 100% !important; text-align: center !important; display: block !important; }
+      .kkt-product-card { min-width: calc((100% - 4px) / 2) !important; width: calc((100% - 4px) / 2) !important; }
+      .kkt-accent-switch { right: 16px !important; bottom: 16px !important; }
+    }
+    @media (min-width: 769px) {
+      .kkt-hamburger { display: none !important; }
+      .kkt-mob-menu  { display: none !important; }
+    }
+  </style>
+</helmet>
+
+<div style="--kkt-accent:{{ accentColor }}; --kkt-accent-dark:{{ accentDark }}; --kkt-accent-rgb:{{ accentRgb }}; --kkt-accent-contrast:{{ accentContrast }};">
+<button class="kkt-accent-switch kkt-cta-shine" onClick="{{ toggleAccent }}" type="button">{{ accentLabel }}</button>
+
+<!-- ─── 1 · ANNOUNCEMENT BAR ─── -->
+<div style="background:var(--kkt-accent); text-align:center; padding:10px 24px; line-height:1; flex-shrink:0;">
+  <span style="font-family:'Inter',sans-serif; font-size:11px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:var(--kkt-accent-contrast);">#STAYKLOSE &nbsp;—&nbsp; FREE SHIPPING ON ORDERS OVER $75</span>
+</div>
+
+<!-- ─── 2 · NAVIGATION ─── -->
+<nav style="background:#000000; border-bottom:1px solid #1F1F1F; padding:0 40px; position:sticky; top:0; z-index:300; height:96px;">
+  <div style="max-width:1280px; margin:0 auto; width:100%; height:100%; display:flex; align-items:center; justify-content:space-between; gap:24px;">
+  <a href="#" style="flex-shrink:0; cursor:pointer; display:flex; align-items:center;">
+    <img src="./uploads/pasted-1782515131485-0.png" alt="Klose Kombat Tactical" style="height:80px; width:auto; display:block;"></img>
+  </a>
+  <div class="kkt-nav-links" style="display:flex; gap:36px; align-items:center;">
+    <a href="#" style="font-family:'Inter',sans-serif; font-size:11px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:#fff; transition:color 0.15s;" style-hover="color:var(--kkt-accent);">HOME</a>
+    <a href="#" style="font-family:'Inter',sans-serif; font-size:11px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:#fff; transition:color 0.15s;" style-hover="color:var(--kkt-accent);">SHOP</a>
+    <a href="#" style="font-family:'Inter',sans-serif; font-size:11px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:#fff; transition:color 0.15s;" style-hover="color:var(--kkt-accent);">MISSION</a>
+    <a href="#" style="font-family:'Inter',sans-serif; font-size:11px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:#fff; transition:color 0.15s;" style-hover="color:var(--kkt-accent);">CONTACT</a>
+  </div>
+  <div style="display:flex; gap:16px; align-items:center; flex-shrink:0;">
+    <button style="background:none; border:none; color:#fff; cursor:pointer; display:flex; align-items:center; padding:4px; transition:color 0.15s;" style-hover="color:var(--kkt-accent);">
+      <svg width="17" height="17" viewBox="0 0 17 17" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+        <circle cx="7" cy="7" r="5"></circle>
+        <line x1="11" y1="11" x2="16" y2="16"></line>
+      </svg>
+    </button>
+    <button style="background:none; border:none; color:#fff; cursor:pointer; display:flex; align-items:center; padding:4px; transition:color 0.15s;" style-hover="color:var(--kkt-accent);">
+      <svg width="17" height="17" viewBox="0 0 17 17" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+        <circle cx="8.5" cy="5.5" r="3.5"></circle>
+        <path d="M1 16c0-3.9 3.4-7 7.5-7s7.5 3.1 7.5 7"></path>
+      </svg>
+    </button>
+    <button style="background:none; border:none; color:#fff; cursor:pointer; display:flex; align-items:center; padding:4px; transition:color 0.15s; position:relative;" style-hover="color:var(--kkt-accent);">
+      <svg width="17" height="17" viewBox="0 0 17 17" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M1 1.5h2.5l2 8.5h8.5l1.5-6H4.5"></path>
+        <circle cx="7" cy="13.5" r="1.2" fill="currentColor" stroke="none"></circle>
+        <circle cx="11.5" cy="13.5" r="1.2" fill="currentColor" stroke="none"></circle>
+      </svg>
+    </button>
+    <button class="kkt-hamburger" onClick="{{ toggleMenu }}" style="display:none; background:none; border:none; color:#fff; cursor:pointer; align-items:center; padding:4px; transition:color 0.15s;" style-hover="color:var(--kkt-accent);">
+      <svg width="20" height="13" viewBox="0 0 20 13" fill="currentColor">
+        <rect width="20" height="1.5" rx="0"></rect>
+        <rect y="5.75" width="20" height="1.5" rx="0"></rect>
+        <rect y="11.5" width="20" height="1.5" rx="0"></rect>
+      </svg>
+    </button>
+  </div>
+  </div>
+</nav>
+
+<sc-if value="{{ mobileMenuOpen }}" hint-placeholder-val="{{ false }}">
+  <div class="kkt-mob-menu" style="background:#0D0D0D; border-bottom:1px solid #1F1F1F; padding:28px 32px; display:flex; flex-direction:column; gap:22px; position:sticky; top:96px; z-index:299;">
+    <a href="#" style="font-family:'Inter',sans-serif; font-size:13px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:#fff;" style-hover="color:var(--kkt-accent);">HOME</a>
+    <a href="#" style="font-family:'Inter',sans-serif; font-size:13px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:#fff;" style-hover="color:var(--kkt-accent);">SHOP</a>
+    <a href="#" style="font-family:'Inter',sans-serif; font-size:13px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:#fff;" style-hover="color:var(--kkt-accent);">MISSION</a>
+    <a href="#" style="font-family:'Inter',sans-serif; font-size:13px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:#fff;" style-hover="color:var(--kkt-accent);">CONTACT</a>
+  </div>
+</sc-if>
+
+<!-- ─── 3 · HERO ─── -->
+<section style="position:relative; min-height:90svh; background:#000; display:flex; flex-direction:column; justify-content:center; overflow:hidden;">
+  <div class="kkt-art">
+    <img src="./assets/generated/hero-bg.png" alt="Klose Kombat Tactical performance apparel" style="width:100%; height:100%; object-fit:cover; object-position:center; display:block;"></img>
+  </div>
+  <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(0,0,0,0.96) 0%, rgba(0,0,0,0.55) 40%, rgba(0,0,0,0.1) 100%); pointer-events:none;"></div>
+  <div class="kkt-hero-content" style="position:relative; z-index:2; padding:48px 64px 96px; max-width:1280px; margin:0 auto; width:100%; transform:translateY(-4vh);">
+    <p style="font-family:'Inter',sans-serif; font-size:10px; font-weight:700; letter-spacing:0.28em; text-transform:uppercase; color:var(--kkt-accent); margin-bottom:20px;">#STAYKLOSE</p>
+    <h1 style="font-family:'Bebas Neue',Impact,sans-serif; font-size:clamp(64px, 9.5vw, 116px); font-weight:400; letter-spacing:0.02em; color:#fff; line-height:0.92; margin-bottom:28px; text-transform:uppercase;">BUILT FOR THOSE<br>WHO SHOW UP.</h1>
+    <p style="font-family:'Inter',sans-serif; font-size:16px; line-height:1.75; color:#A8A8A8; margin-bottom:52px; max-width:440px; letter-spacing:0.01em;">Performance essentials engineered for professionals in every uniform. Purpose-built for those who never clock out. Zero compromise.</p>
+    <a href="#" class="kkt-btn-full kkt-cta-shine" style="display:inline-block; background:transparent; border:1px solid #fff; color:#fff; padding:17px 44px; font-family:'Inter',sans-serif; font-size:12px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; transition:all 0.2s ease;" style-hover="background:var(--kkt-accent); border-color:var(--kkt-accent); color:var(--kkt-accent-contrast);">SHOP MISSION ESSENTIALS</a>
+  </div>
+</section>
+
+<!-- ─── 4 · TRUST BAR ─── -->
+<section style="background:#0D0D0D; border-top:1px solid #1F1F1F; border-bottom:1px solid #1F1F1F;">
+  <div class="kkt-trust-grid" style="display:grid; grid-template-columns:repeat(4,1fr); max-width:1280px; margin:0 auto;">
+    <div class="kkt-trust-item" style="display:flex; flex-direction:column; align-items:center; gap:14px; padding:40px 20px; text-align:center; border-right:1px solid #1F1F1F;">
+      <svg width="30" height="22" viewBox="0 0 30 22" fill="none" stroke="var(--kkt-accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="1" y="5" width="17" height="12" rx="0"></rect>
+        <rect x="18" y="9" width="10" height="8" rx="0"></rect>
+        <circle cx="6.5" cy="19" r="2.2" stroke="var(--kkt-accent)" fill="none"></circle>
+        <circle cx="23" cy="19" r="2.2" stroke="var(--kkt-accent)" fill="none"></circle>
+      </svg>
+      <div>
+        <p style="font-family:'Bebas Neue',sans-serif; font-size:17px; letter-spacing:0.08em; color:#fff; line-height:1; margin-bottom:5px;">FREE SHIPPING</p>
+        <p style="font-family:'Inter',sans-serif; font-size:10px; color:#555; letter-spacing:0.08em; text-transform:uppercase;">Orders over $75</p>
+      </div>
+    </div>
+    <div class="kkt-trust-item" style="display:flex; flex-direction:column; align-items:center; gap:14px; padding:40px 20px; text-align:center; border-right:1px solid #1F1F1F;">
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="var(--kkt-accent)" stroke-width="1.5">
+        <polygon points="13,1 25,7 25,19 13,25 1,19 1,7"></polygon>
+        <polygon points="13,8 19,11 19,17 13,20 7,17 7,11"></polygon>
+      </svg>
+      <div>
+        <p style="font-family:'Bebas Neue',sans-serif; font-size:17px; letter-spacing:0.08em; color:#fff; line-height:1; margin-bottom:5px;">BUILT TOUGH</p>
+        <p style="font-family:'Inter',sans-serif; font-size:10px; color:#555; letter-spacing:0.08em; text-transform:uppercase;">Military-grade construction</p>
+      </div>
+    </div>
+    <div class="kkt-trust-item" style="display:flex; flex-direction:column; align-items:center; gap:14px; padding:40px 20px; text-align:center; border-right:1px solid #1F1F1F;">
+      <span style="font-size:28px; line-height:1; color:var(--kkt-accent); display:block; font-family:serif;">★</span>
+      <div>
+        <p style="font-family:'Bebas Neue',sans-serif; font-size:17px; letter-spacing:0.08em; color:#fff; line-height:1; margin-bottom:5px;">VETERAN INSPIRED</p>
+        <p style="font-family:'Inter',sans-serif; font-size:10px; color:#555; letter-spacing:0.08em; text-transform:uppercase;">Designed by those who served</p>
+      </div>
+    </div>
+    <div class="kkt-trust-item" style="display:flex; flex-direction:column; align-items:center; gap:14px; padding:40px 20px; text-align:center;">
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="var(--kkt-accent)" stroke-width="1.5" stroke-linecap="round">
+        <path d="M4 14 A10 10 0 0 1 24 14"></path>
+        <polygon points="4,14 1,9 7,9"></polygon>
+        <polygon points="24,14 21,19 27,19"></polygon>
+      </svg>
+      <div>
+        <p style="font-family:'Bebas Neue',sans-serif; font-size:17px; letter-spacing:0.08em; color:#fff; line-height:1; margin-bottom:5px;">EASY RETURNS</p>
+        <p style="font-family:'Inter',sans-serif; font-size:10px; color:#555; letter-spacing:0.08em; text-transform:uppercase;">30-day hassle-free policy</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── 5 · WHO WE SERVE ─── -->
+<section style="background:#000; padding:96px 40px; border-bottom:1px solid #1F1F1F;">
+  <div style="max-width:1280px; margin:0 auto;">
+    <div style="text-align:center; margin-bottom:56px;">
+      <p style="font-family:'Inter',sans-serif; font-size:10px; font-weight:600; letter-spacing:0.22em; text-transform:uppercase; color:var(--kkt-accent); margin-bottom:12px;">ONE STANDARD. EVERY UNIFORM.</p>
+      <h2 style="font-family:'Bebas Neue',sans-serif; font-size:clamp(40px,5vw,60px); font-weight:400; letter-spacing:0.04em; color:#fff; text-transform:uppercase;">WHO WE SERVE</h2>
+    </div>
+    <div class="kkt-serve-tiles" style="display:grid; grid-template-columns:repeat(3,1fr); gap:2px;">
+      <div style="position:relative; aspect-ratio:1; background:repeating-linear-gradient(-45deg,#060606 0,#060606 10px,#090909 10px,#090909 20px); border:1px solid #1F1F1F; cursor:pointer; overflow:hidden; display:flex; flex-direction:column; justify-content:flex-end; transition:border-color 0.2s;" style-hover="border-color:var(--kkt-accent);">
+        <div class="kkt-art">
+          <img src="./assets/generated/serve-military.png" alt="Military tactical apparel" style="width:100%; height:100%; object-fit:cover; object-position:center; display:block;"></img>
+        </div>
+        <div style="position:relative; z-index:2; padding:16px 20px; background:linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0) 100%);">
+          <p style="font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:0.1em; color:#fff; text-transform:uppercase;">MILITARY</p>
+        </div>
+      </div>
+      <div style="position:relative; aspect-ratio:1; background:repeating-linear-gradient(-45deg,#060606 0,#060606 10px,#090909 10px,#090909 20px); border:1px solid #1F1F1F; cursor:pointer; overflow:hidden; display:flex; flex-direction:column; justify-content:flex-end; transition:border-color 0.2s;" style-hover="border-color:var(--kkt-accent);">
+        <div class="kkt-art">
+          <img src="./assets/generated/serve-fire.png" alt="Firefighter tactical apparel" style="width:100%; height:100%; object-fit:cover; object-position:center; display:block;"></img>
+        </div>
+        <div style="position:relative; z-index:2; padding:16px 20px; background:linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0) 100%);">
+          <p style="font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:0.1em; color:#fff; text-transform:uppercase;">FIRE</p>
+        </div>
+      </div>
+      <div style="position:relative; aspect-ratio:1; background:repeating-linear-gradient(-45deg,#060606 0,#060606 10px,#090909 10px,#090909 20px); border:1px solid #1F1F1F; cursor:pointer; overflow:hidden; display:flex; flex-direction:column; justify-content:flex-end; transition:border-color 0.2s;" style-hover="border-color:var(--kkt-accent);">
+        <div class="kkt-art">
+          <img src="./assets/generated/serve-ems.png" alt="EMS tactical apparel" style="width:100%; height:100%; object-fit:cover; object-position:center; display:block;"></img>
+        </div>
+        <div style="position:relative; z-index:2; padding:16px 20px; background:linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0) 100%);">
+          <p style="font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:0.1em; color:#fff; text-transform:uppercase;">EMS</p>
+        </div>
+      </div>
+      <div style="position:relative; aspect-ratio:1; background:repeating-linear-gradient(-45deg,#060606 0,#060606 10px,#090909 10px,#090909 20px); border:1px solid #1F1F1F; cursor:pointer; overflow:hidden; display:flex; flex-direction:column; justify-content:flex-end; transition:border-color 0.2s;" style-hover="border-color:var(--kkt-accent);">
+        <div class="kkt-art">
+          <img src="./assets/generated/serve-police.png" alt="Police tactical apparel" style="width:100%; height:100%; object-fit:cover; object-position:center; display:block;"></img>
+        </div>
+        <div style="position:relative; z-index:2; padding:16px 20px; background:linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0) 100%);">
+          <p style="font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:0.1em; color:#fff; text-transform:uppercase;">POLICE</p>
+        </div>
+      </div>
+      <div style="position:relative; aspect-ratio:1; background:repeating-linear-gradient(-45deg,#060606 0,#060606 10px,#090909 10px,#090909 20px); border:1px solid #1F1F1F; cursor:pointer; overflow:hidden; display:flex; flex-direction:column; justify-content:flex-end; transition:border-color 0.2s;" style-hover="border-color:var(--kkt-accent);">
+        <div class="kkt-art">
+          <img src="./assets/generated/serve-nurses.png" alt="Nurse performance apparel" style="width:100%; height:100%; object-fit:cover; object-position:center; display:block;"></img>
+        </div>
+        <div style="position:relative; z-index:2; padding:16px 20px; background:linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0) 100%);">
+          <p style="font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:0.1em; color:#fff; text-transform:uppercase;">NURSES</p>
+        </div>
+      </div>
+      <div style="position:relative; aspect-ratio:1; background:repeating-linear-gradient(-45deg,#060606 0,#060606 10px,#090909 10px,#090909 20px); border:1px solid #1F1F1F; cursor:pointer; overflow:hidden; display:flex; flex-direction:column; justify-content:flex-end; transition:border-color 0.2s;" style-hover="border-color:var(--kkt-accent);">
+        <div class="kkt-art">
+          <img src="./assets/generated/serve-construction.png" alt="Construction tactical apparel" style="width:100%; height:100%; object-fit:cover; object-position:center; display:block;"></img>
+        </div>
+        <div style="position:relative; z-index:2; padding:16px 20px; background:linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0) 100%);">
+          <p style="font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:0.1em; color:#fff; text-transform:uppercase;">CONSTRUCTION</p>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:48px;">
+      <a href="#" class="kkt-cta-shine" style="display:inline-block; background:transparent; border:1px solid rgba(255,255,255,0.4); color:#fff; padding:14px 40px; font-family:'Inter',sans-serif; font-size:11px; font-weight:600; letter-spacing:0.16em; text-transform:uppercase; transition:all 0.2s ease;" style-hover="background:var(--kkt-accent); border-color:var(--kkt-accent); color:var(--kkt-accent-contrast);">OUR MISSION</a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── 6 · FEATURED PRODUCTS — arrow slider ─── -->
+<section style="background:#0D0D0D; padding:96px 0 96px; border-bottom:1px solid #1F1F1F; overflow:hidden;">
+  <div style="max-width:1280px; margin:0 auto; padding:0 40px 48px;">
+    <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:16px; flex-wrap:wrap;">
+      <div>
+        <p style="font-family:'Inter',sans-serif; font-size:10px; font-weight:600; letter-spacing:0.22em; text-transform:uppercase; color:var(--kkt-accent); margin-bottom:10px;">FEATURED COLLECTION</p>
+        <h2 style="font-family:'Bebas Neue',sans-serif; font-size:clamp(40px,5vw,60px); font-weight:400; letter-spacing:0.04em; color:#fff; text-transform:uppercase;">MISSION ESSENTIALS</h2>
+      </div>
+      <a href="#" style="font-family:'Inter',sans-serif; font-size:11px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:#A8A8A8; border-bottom:1px solid #333; padding-bottom:2px; white-space:nowrap; transition:all 0.15s;" style-hover="color:#fff; border-color:#fff;">VIEW ALL PRODUCTS →</a>
+    </div>
+  </div>
+  <!-- Slider track: arrows move one product card at a time. -->
+  <div style="max-width:1280px; margin:0 auto; padding:0 40px; position:relative;">
+    <button onClick="{{ slidePrev }}" aria-label="Previous products" style="position:absolute; left:18px; top:130px; transform:translateY(-50%); width:44px; height:44px; border:1px solid rgba(255,255,255,0.45); background:rgba(0,0,0,0.82); color:#fff; cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:5; font-size:28px; line-height:1; transition:all 0.2s;" style-hover="background:var(--kkt-accent); border-color:var(--kkt-accent); color:var(--kkt-accent-contrast);">‹</button>
+    <button onClick="{{ slideNext }}" aria-label="Next products" style="position:absolute; right:18px; top:130px; transform:translateY(-50%); width:44px; height:44px; border:1px solid rgba(255,255,255,0.45); background:rgba(0,0,0,0.82); color:#fff; cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:5; font-size:28px; line-height:1; transition:all 0.2s;" style-hover="background:var(--kkt-accent); border-color:var(--kkt-accent); color:var(--kkt-accent-contrast);">›</button>
+    <div style="overflow:hidden; width:100%; position:relative;">
+    <div class="kkt-slider-track" style="display:flex; transform:translateX(-{{ sliderOffsetPct }}%);">
+      <!-- ── CARD 1 : TACTICAL COMBAT SHIRT ── -->
+      <div class="kkt-product-card" style="flex-shrink:0; margin-right:2px; background:#141414; border:1px solid #1F1F1F; display:flex; flex-direction:column; transition:border-color 0.2s;" style-hover="border-color:#333;">
+        <div style="position:relative; height:260px; overflow:hidden;">
+          <div class="kkt-art">
+            <img src="./assets/generated/product-combat-shirt.png" alt="Tactical combat shirt" style="width:100%; height:100%; object-fit:cover; object-position:center; display:block;"></img>
+          </div>
+          <div style="position:absolute; top:12px; left:12px; background:var(--kkt-accent); color:var(--kkt-accent-contrast); font-family:'Inter',sans-serif; font-size:9px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; padding:4px 8px;">BESTSELLER</div>
+        </div>
+        <div style="padding:18px 20px 22px; display:flex; flex-direction:column; gap:8px; flex:1;">
+          <h3 style="font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:0.06em; color:#fff; text-transform:uppercase; line-height:1;">TACTICAL COMBAT SHIRT</h3>
+          <p style="font-family:'Inter',sans-serif; font-size:11px; color:#555; letter-spacing:0.04em; text-transform:uppercase;">Quick-dry · 4-way stretch</p>
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-top:auto; padding-top:14px; border-top:1px solid #1F1F1F; gap:10px;">
+            <span style="font-family:'Inter',sans-serif; font-size:17px; font-weight:600; color:#fff;">$89.00</span>
+            <button class="kkt-cta-shine" style="background:transparent; border:1px solid #fff; color:#fff; padding:9px 16px; font-family:'Inter',sans-serif; font-size:10px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; cursor:pointer; white-space:nowrap; transition:all 0.2s;" style-hover="background:var(--kkt-accent); border-color:var(--kkt-accent); color:var(--kkt-accent-contrast);">ADD TO CART</button>
+          </div>
+        </div>
+      </div>
+      <!-- ── CARD 2 : OPERATOR CARGO PANTS ── -->
+      <div class="kkt-product-card" style="flex-shrink:0; margin-right:2px; background:#141414; border:1px solid #1F1F1F; display:flex; flex-direction:column; transition:border-color 0.2s;" style-hover="border-color:#333;">
+        <div style="position:relative; height:260px; overflow:hidden;">
+          <div class="kkt-art">
+            <img src="./assets/generated/product-cargo-pants.png" alt="Operator cargo pants" style="width:100%; height:100%; object-fit:cover; object-position:center; display:block;"></img>
+          </div>
+          <div style="position:absolute; top:12px; left:12px; background:#1F1F1F; color:#A8A8A8; font-family:'Inter',sans-serif; font-size:9px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; padding:4px 8px;">NEW ARRIVAL</div>
+        </div>
+        <div style="padding:18px 20px 22px; display:flex; flex-direction:column; gap:8px; flex:1;">
+          <h3 style="font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:0.06em; color:#fff; text-transform:uppercase; line-height:1;">OPERATOR CARGO PANTS</h3>
+          <p style="font-family:'Inter',sans-serif; font-size:11px; color:#555; letter-spacing:0.04em; text-transform:uppercase;">Ripstop · Multi-pocket tactical</p>
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-top:auto; padding-top:14px; border-top:1px solid #1F1F1F; gap:10px;">
+            <span style="font-family:'Inter',sans-serif; font-size:17px; font-weight:600; color:#fff;">$119.00</span>
+            <button class="kkt-cta-shine" style="background:transparent; border:1px solid #fff; color:#fff; padding:9px 16px; font-family:'Inter',sans-serif; font-size:10px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; cursor:pointer; white-space:nowrap; transition:all 0.2s;" style-hover="background:var(--kkt-accent); border-color:var(--kkt-accent); color:var(--kkt-accent-contrast);">ADD TO CART</button>
+          </div>
+        </div>
+      </div>
+      <!-- ── CARD 3 : KKT TACTICAL SOCKS ── -->
+      <div class="kkt-product-card" style="flex-shrink:0; margin-right:2px; background:#141414; border:1px solid #1F1F1F; display:flex; flex-direction:column; transition:border-color 0.2s;" style-hover="border-color:#333;">
+        <div style="position:relative; height:260px; overflow:hidden;">
+          <div class="kkt-art">
+            <img src="./assets/generated/product-tactical-socks.png" alt="KKT tactical socks" style="width:100%; height:100%; object-fit:cover; object-position:center; display:block;"></img>
+          </div>
+          <div style="position:absolute; top:12px; left:12px; background:var(--kkt-accent); color:var(--kkt-accent-contrast); font-family:'Inter',sans-serif; font-size:9px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; padding:4px 8px;">ESSENTIAL</div>
+        </div>
+        <div style="padding:18px 20px 22px; display:flex; flex-direction:column; gap:8px; flex:1;">
+          <h3 style="font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:0.06em; color:#fff; text-transform:uppercase; line-height:1;">KKT TACTICAL SOCKS</h3>
+          <p style="font-family:'Inter',sans-serif; font-size:11px; color:#555; letter-spacing:0.04em; text-transform:uppercase;">Moisture-wicking · Cushioned · 3-pack</p>
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-top:auto; padding-top:14px; border-top:1px solid #1F1F1F; gap:10px;">
+            <span style="font-family:'Inter',sans-serif; font-size:17px; font-weight:600; color:#fff;">$24.00</span>
+            <button class="kkt-cta-shine" style="background:transparent; border:1px solid #fff; color:#fff; padding:9px 16px; font-family:'Inter',sans-serif; font-size:10px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; cursor:pointer; white-space:nowrap; transition:all 0.2s;" style-hover="background:var(--kkt-accent); border-color:var(--kkt-accent); color:var(--kkt-accent-contrast);">ADD TO CART</button>
+          </div>
+        </div>
+      </div>
+      <!-- ── CARD 4 : PERFORMANCE HOODIE ── -->
+      <div class="kkt-product-card" style="flex-shrink:0; margin-right:2px; background:#141414; border:1px solid #1F1F1F; display:flex; flex-direction:column; transition:border-color 0.2s;" style-hover="border-color:#333;">
+        <div style="position:relative; height:260px; overflow:hidden;">
+          <div class="kkt-art">
+            <img src="./assets/generated/product-performance-hoodie.png" alt="Performance hoodie" style="width:100%; height:100%; object-fit:cover; object-position:center; display:block;"></img>
+          </div>
+        </div>
+        <div style="padding:18px 20px 22px; display:flex; flex-direction:column; gap:8px; flex:1;">
+          <h3 style="font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:0.06em; color:#fff; text-transform:uppercase; line-height:1;">PERFORMANCE HOODIE</h3>
+          <p style="font-family:'Inter',sans-serif; font-size:11px; color:#555; letter-spacing:0.04em; text-transform:uppercase;">Heavyweight fleece · Tactical pockets</p>
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-top:auto; padding-top:14px; border-top:1px solid #1F1F1F; gap:10px;">
+            <span style="font-family:'Inter',sans-serif; font-size:17px; font-weight:600; color:#fff;">$79.00</span>
+            <button class="kkt-cta-shine" style="background:transparent; border:1px solid #fff; color:#fff; padding:9px 16px; font-family:'Inter',sans-serif; font-size:10px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; cursor:pointer; white-space:nowrap; transition:all 0.2s;" style-hover="background:var(--kkt-accent); border-color:var(--kkt-accent); color:var(--kkt-accent-contrast);">ADD TO CART</button>
+          </div>
+        </div>
+      </div>
+      <!-- ── DUPLICATE SET (cards 1–4 repeated for seamless loop) ── -->
+      <div class="kkt-product-card" style="flex-shrink:0; margin-right:2px; background:#141414; border:1px solid #1F1F1F; display:flex; flex-direction:column;">
+        <div style="position:relative; height:260px; overflow:hidden;">
+          <div class="kkt-art">
+            <img src="./assets/generated/product-combat-shirt.png" alt="Tactical combat shirt" style="width:100%; height:100%; object-fit:cover; object-position:center; display:block;"></img>
+          </div>
+          <div style="position:absolute; top:12px; left:12px; background:var(--kkt-accent); color:var(--kkt-accent-contrast); font-family:'Inter',sans-serif; font-size:9px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; padding:4px 8px;">BESTSELLER</div>
+        </div>
+        <div style="padding:18px 20px 22px; display:flex; flex-direction:column; gap:8px; flex:1;">
+          <h3 style="font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:0.06em; color:#fff; text-transform:uppercase; line-height:1;">TACTICAL COMBAT SHIRT</h3>
+          <p style="font-family:'Inter',sans-serif; font-size:11px; color:#555; letter-spacing:0.04em; text-transform:uppercase;">Quick-dry · 4-way stretch</p>
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-top:auto; padding-top:14px; border-top:1px solid #1F1F1F; gap:10px;">
+            <span style="font-family:'Inter',sans-serif; font-size:17px; font-weight:600; color:#fff;">$89.00</span>
+            <button class="kkt-cta-shine" style="background:transparent; border:1px solid #fff; color:#fff; padding:9px 16px; font-family:'Inter',sans-serif; font-size:10px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; cursor:pointer; white-space:nowrap; transition:all 0.2s;" style-hover="background:var(--kkt-accent); border-color:var(--kkt-accent); color:var(--kkt-accent-contrast);">ADD TO CART</button>
+          </div>
+        </div>
+      </div>
+      <div class="kkt-product-card" style="flex-shrink:0; margin-right:2px; background:#141414; border:1px solid #1F1F1F; display:flex; flex-direction:column;">
+        <div style="position:relative; height:260px; overflow:hidden;">
+          <div class="kkt-art">
+            <img src="./assets/generated/product-cargo-pants.png" alt="Operator cargo pants" style="width:100%; height:100%; object-fit:cover; object-position:center; display:block;"></img>
+          </div>
+          <div style="position:absolute; top:12px; left:12px; background:#1F1F1F; color:#A8A8A8; font-family:'Inter',sans-serif; font-size:9px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; padding:4px 8px;">NEW ARRIVAL</div>
+        </div>
+        <div style="padding:18px 20px 22px; display:flex; flex-direction:column; gap:8px; flex:1;">
+          <h3 style="font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:0.06em; color:#fff; text-transform:uppercase; line-height:1;">OPERATOR CARGO PANTS</h3>
+          <p style="font-family:'Inter',sans-serif; font-size:11px; color:#555; letter-spacing:0.04em; text-transform:uppercase;">Ripstop · Multi-pocket tactical</p>
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-top:auto; padding-top:14px; border-top:1px solid #1F1F1F; gap:10px;">
+            <span style="font-family:'Inter',sans-serif; font-size:17px; font-weight:600; color:#fff;">$119.00</span>
+            <button class="kkt-cta-shine" style="background:transparent; border:1px solid #fff; color:#fff; padding:9px 16px; font-family:'Inter',sans-serif; font-size:10px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; cursor:pointer; white-space:nowrap; transition:all 0.2s;" style-hover="background:var(--kkt-accent); border-color:var(--kkt-accent); color:var(--kkt-accent-contrast);">ADD TO CART</button>
+          </div>
+        </div>
+      </div>
+      <div class="kkt-product-card" style="flex-shrink:0; margin-right:2px; background:#141414; border:1px solid #1F1F1F; display:flex; flex-direction:column;">
+        <div style="position:relative; height:260px; overflow:hidden;">
+          <div class="kkt-art">
+            <img src="./assets/generated/product-tactical-socks.png" alt="KKT tactical socks" style="width:100%; height:100%; object-fit:cover; object-position:center; display:block;"></img>
+          </div>
+          <div style="position:absolute; top:12px; left:12px; background:var(--kkt-accent); color:var(--kkt-accent-contrast); font-family:'Inter',sans-serif; font-size:9px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; padding:4px 8px;">ESSENTIAL</div>
+        </div>
+        <div style="padding:18px 20px 22px; display:flex; flex-direction:column; gap:8px; flex:1;">
+          <h3 style="font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:0.06em; color:#fff; text-transform:uppercase; line-height:1;">KKT TACTICAL SOCKS</h3>
+          <p style="font-family:'Inter',sans-serif; font-size:11px; color:#555; letter-spacing:0.04em; text-transform:uppercase;">Moisture-wicking · Cushioned · 3-pack</p>
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-top:auto; padding-top:14px; border-top:1px solid #1F1F1F; gap:10px;">
+            <span style="font-family:'Inter',sans-serif; font-size:17px; font-weight:600; color:#fff;">$24.00</span>
+            <button class="kkt-cta-shine" style="background:transparent; border:1px solid #fff; color:#fff; padding:9px 16px; font-family:'Inter',sans-serif; font-size:10px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; cursor:pointer; white-space:nowrap; transition:all 0.2s;" style-hover="background:var(--kkt-accent); border-color:var(--kkt-accent); color:var(--kkt-accent-contrast);">ADD TO CART</button>
+          </div>
+        </div>
+      </div>
+      <div class="kkt-product-card" style="flex-shrink:0; margin-right:2px; background:#141414; border:1px solid #1F1F1F; display:flex; flex-direction:column;">
+        <div style="position:relative; height:260px; overflow:hidden;">
+          <div class="kkt-art">
+            <img src="./assets/generated/product-performance-hoodie.png" alt="Performance hoodie" style="width:100%; height:100%; object-fit:cover; object-position:center; display:block;"></img>
+          </div>
+        </div>
+        <div style="padding:18px 20px 22px; display:flex; flex-direction:column; gap:8px; flex:1;">
+          <h3 style="font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:0.06em; color:#fff; text-transform:uppercase; line-height:1;">PERFORMANCE HOODIE</h3>
+          <p style="font-family:'Inter',sans-serif; font-size:11px; color:#555; letter-spacing:0.04em; text-transform:uppercase;">Heavyweight fleece · Tactical pockets</p>
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-top:auto; padding-top:14px; border-top:1px solid #1F1F1F; gap:10px;">
+            <span style="font-family:'Inter',sans-serif; font-size:17px; font-weight:600; color:#fff;">$79.00</span>
+            <button class="kkt-cta-shine" style="background:transparent; border:1px solid #fff; color:#fff; padding:9px 16px; font-family:'Inter',sans-serif; font-size:10px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; cursor:pointer; white-space:nowrap; transition:all 0.2s;" style-hover="background:var(--kkt-accent); border-color:var(--kkt-accent); color:var(--kkt-accent-contrast);">ADD TO CART</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── 7 · BRAND STATEMENT ─── -->
+<section class="kkt-section" style="background:#000; padding:120px 40px; border-bottom:1px solid #1F1F1F; text-align:center;">
+  <div style="max-width:960px; margin:0 auto; display:flex; flex-direction:column; align-items:center; gap:28px;">
+    <div style="width:40px; height:1px; background:var(--kkt-accent);"></div>
+    <h2 style="font-family:'Bebas Neue',sans-serif; font-size:clamp(40px,6.5vw,84px); font-weight:400; letter-spacing:0.03em; color:#fff; line-height:1.0; text-transform:uppercase; text-wrap:balance;">ENGINEERED FOR THE ONES<br>OTHERS DEPEND ON.</h2>
+    <p style="font-family:'Inter',sans-serif; font-size:15px; line-height:1.8; color:#A8A8A8; max-width:560px; letter-spacing:0.01em;">Every stitch, every seam, every material choice is made with one question: will this hold when it needs to? Our gear doesn't fail the people who can't afford failure.</p>
+    <div style="width:40px; height:1px; background:#1F1F1F; margin-top:8px;"></div>
+  </div>
+</section>
+
+<!-- ─── 8 · HOW IT'S BUILT ─── -->
+<section class="kkt-section" style="background:#0D0D0D; padding:96px 40px; border-bottom:1px solid #1F1F1F;">
+  <div style="max-width:1280px; margin:0 auto;">
+    <p style="font-family:'Inter',sans-serif; font-size:10px; font-weight:600; letter-spacing:0.22em; text-transform:uppercase; color:var(--kkt-accent); margin-bottom:10px; text-align:center;">THE DETAILS</p>
+    <h2 style="font-family:'Bebas Neue',sans-serif; font-size:clamp(36px,4vw,52px); font-weight:400; letter-spacing:0.04em; color:#fff; text-transform:uppercase; text-align:center; margin-bottom:64px;">HOW IT'S BUILT</h2>
+    <div class="kkt-built-grid" style="display:grid; grid-template-columns:repeat(3,1fr); gap:2px;">
+      <div style="padding:48px 40px; border:1px solid #1F1F1F; display:flex; flex-direction:column; gap:20px;">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none" stroke="var(--kkt-accent)" stroke-width="1.5">
+          <circle cx="18" cy="18" r="14"></circle>
+          <circle cx="18" cy="18" r="7"></circle>
+          <circle cx="18" cy="18" r="2" fill="var(--kkt-accent)" stroke="none"></circle>
+        </svg>
+        <h3 style="font-family:'Bebas Neue',sans-serif; font-size:26px; letter-spacing:0.06em; color:#fff; text-transform:uppercase;">PERFORMANCE FABRIC</h3>
+        <div style="width:24px; height:1px; background:var(--kkt-accent);"></div>
+        <p style="font-family:'Inter',sans-serif; font-size:14px; line-height:1.75; color:#A8A8A8;">4-way stretch ripstop engineered for unrestricted movement. Moisture-wicking, fast-dry, and rated for professional-grade wear.</p>
+      </div>
+      <div style="padding:48px 40px; border:1px solid #1F1F1F; display:flex; flex-direction:column; gap:20px;">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none" stroke="var(--kkt-accent)" stroke-width="1.5">
+          <circle cx="18" cy="18" r="14"></circle>
+          <line x1="4" y1="18" x2="32" y2="18"></line>
+          <line x1="18" y1="4" x2="18" y2="32"></line>
+        </svg>
+        <h3 style="font-family:'Bebas Neue',sans-serif; font-size:26px; letter-spacing:0.06em; color:#fff; text-transform:uppercase;">TACTICAL FIT</h3>
+        <div style="width:24px; height:1px; background:var(--kkt-accent);"></div>
+        <p style="font-family:'Inter',sans-serif; font-size:14px; line-height:1.75; color:#A8A8A8;">Cut for professionals. Gusseted crotch, articulated knees, and reinforced stress points designed for full range of duty motion.</p>
+      </div>
+      <div style="padding:48px 40px; border:1px solid #1F1F1F; display:flex; flex-direction:column; gap:20px;">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none" stroke="var(--kkt-accent)" stroke-width="1.5">
+          <polygon points="18,3 33,12 33,24 18,33 3,24 3,12"></polygon>
+          <polygon points="18,12 25,16 25,22 18,26 11,22 11,16"></polygon>
+        </svg>
+        <h3 style="font-family:'Bebas Neue',sans-serif; font-size:26px; letter-spacing:0.06em; color:#fff; text-transform:uppercase;">BUILT TO LAST</h3>
+        <div style="width:24px; height:1px; background:var(--kkt-accent);"></div>
+        <p style="font-family:'Inter',sans-serif; font-size:14px; line-height:1.75; color:#A8A8A8;">Double-stitched seams, reinforced bar tacks, and industrial-grade hardware. Built to outlast every shift, every season, every deployment.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── 9 · MISSION / ABOUT ─── -->
+<section style="background:#000; border-bottom:1px solid #1F1F1F; overflow:hidden;">
+  <div class="kkt-mission-row" style="display:flex; max-width:none; min-height:540px;">
+    <div class="kkt-mission-img" style="width:50%; flex-shrink:0; position:relative; background:#050505; min-height:480px;">
+      <div class="kkt-art">
+        <img src="./assets/generated/mission-about.png" alt="Klose Kombat Tactical mission" style="width:100%; height:100%; object-fit:cover; object-position:center; display:block;"></img>
+      </div>
+    </div>
+    <div style="flex:1; padding:80px 64px; display:flex; flex-direction:column; justify-content:center; gap:28px; border-left:1px solid #1F1F1F;">
+      <div style="width:32px; height:1px; background:var(--kkt-accent);"></div>
+      <p style="font-family:'Inter',sans-serif; font-size:10px; font-weight:600; letter-spacing:0.22em; text-transform:uppercase; color:var(--kkt-accent);">OUR MISSION</p>
+      <h2 style="font-family:'Bebas Neue',sans-serif; font-size:clamp(36px,3.5vw,52px); font-weight:400; letter-spacing:0.04em; color:#fff; text-transform:uppercase; line-height:1.05;">WE BUILD FOR<br>THOSE WHO SERVE.</h2>
+      <p style="font-family:'Inter',sans-serif; font-size:15px; line-height:1.8; color:#A8A8A8; max-width:480px;">We build performance apparel for those who dedicate their lives to serving others. By delivering uncompromising quality, comfort, and durability, we support the men and women who stand ready when their communities need them most.</p>
+      <a href="#" class="kkt-cta-shine" style="display:inline-block; background:transparent; border:1px solid rgba(255,255,255,0.5); color:#fff; padding:15px 36px; font-family:'Inter',sans-serif; font-size:11px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; align-self:flex-start; transition:all 0.2s;" style-hover="background:var(--kkt-accent); border-color:var(--kkt-accent); color:var(--kkt-accent-contrast);">OUR MISSION</a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── 10 · TESTIMONIALS ─── -->
+<section class="kkt-section" style="background:#0D0D0D; padding:96px 40px; border-bottom:1px solid #1F1F1F;">
+  <div style="max-width:1280px; margin:0 auto;">
+    <p style="font-family:'Inter',sans-serif; font-size:10px; font-weight:600; letter-spacing:0.22em; text-transform:uppercase; color:var(--kkt-accent); margin-bottom:10px; text-align:center;">FIELD TESTED</p>
+    <h2 style="font-family:'Bebas Neue',sans-serif; font-size:clamp(36px,4vw,52px); font-weight:400; letter-spacing:0.04em; color:#fff; text-transform:uppercase; text-align:center; margin-bottom:56px;">FROM THOSE WHO KNOW</h2>
+    <div class="kkt-testi-grid" style="display:grid; grid-template-columns:repeat(3,1fr); gap:2px;">
+      <div style="background:#141414; border:1px solid #1F1F1F; padding:40px 36px; display:flex; flex-direction:column; gap:20px;">
+        <span style="font-family:'Bebas Neue',sans-serif; font-size:64px; color:var(--kkt-accent); line-height:0.7; font-weight:400;">"</span>
+        <p style="font-family:'Inter',sans-serif; font-size:15px; line-height:1.8; color:#D0D0D0; letter-spacing:0.01em; flex:1;">This gear held up through six months of deployment without missing a beat. The combat shirt breathes in the heat and doesn't restrict movement. Exactly what I needed.</p>
+        <div style="border-top:1px solid #1F1F1F; padding-top:20px;">
+          <p style="font-family:'Bebas Neue',sans-serif; font-size:16px; letter-spacing:0.1em; color:#fff;">SGT. M. TORRES</p>
+          <p style="font-family:'Inter',sans-serif; font-size:11px; color:#555; letter-spacing:0.08em; text-transform:uppercase; margin-top:3px;">U.S. Army · 3rd Infantry Division</p>
+          <span style="color:var(--kkt-accent); font-size:12px; display:block; margin-top:10px;">★★★★★</span>
+        </div>
+      </div>
+      <div style="background:#141414; border:1px solid #1F1F1F; padding:40px 36px; display:flex; flex-direction:column; gap:20px;">
+        <span style="font-family:'Bebas Neue',sans-serif; font-size:64px; color:var(--kkt-accent); line-height:0.7; font-weight:400;">"</span>
+        <p style="font-family:'Inter',sans-serif; font-size:15px; line-height:1.8; color:#D0D0D0; letter-spacing:0.01em; flex:1;">Finally a tactical brand that understands what real duty looks like. Built for the field, not the gym. I've gone through three pairs of cargo pants and they look brand new.</p>
+        <div style="border-top:1px solid #1F1F1F; padding-top:20px;">
+          <p style="font-family:'Bebas Neue',sans-serif; font-size:16px; letter-spacing:0.1em; color:#fff;">J. HAYES</p>
+          <p style="font-family:'Inter',sans-serif; font-size:11px; color:#555; letter-spacing:0.08em; text-transform:uppercase; margin-top:3px;">Firefighter · FDNY Engine 234</p>
+          <span style="color:var(--kkt-accent); font-size:12px; display:block; margin-top:10px;">★★★★★</span>
+        </div>
+      </div>
+      <div style="background:#141414; border:1px solid #1F1F1F; padding:40px 36px; display:flex; flex-direction:column; gap:20px;">
+        <span style="font-family:'Bebas Neue',sans-serif; font-size:64px; color:var(--kkt-accent); line-height:0.7; font-weight:400;">"</span>
+        <p style="font-family:'Inter',sans-serif; font-size:15px; line-height:1.8; color:#D0D0D0; letter-spacing:0.01em; flex:1;">The tactical socks are unreal — 12 hours on my feet and zero issues. And the cargo pants? Best I've worn in 12 years on the force. No fluff, just function.</p>
+        <div style="border-top:1px solid #1F1F1F; padding-top:20px;">
+          <p style="font-family:'Bebas Neue',sans-serif; font-size:16px; letter-spacing:0.1em; color:#fff;">CPL. A. REYES</p>
+          <p style="font-family:'Inter',sans-serif; font-size:11px; color:#555; letter-spacing:0.08em; text-transform:uppercase; margin-top:3px;">Law Enforcement · LAPD</p>
+          <span style="color:var(--kkt-accent); font-size:12px; display:block; margin-top:10px;">★★★★★</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── 11 · JOIN THE WATCH ─── (reduced size per Sunny) -->
+<section style="position:relative; background:#000; padding:72px 40px; text-align:center; border-bottom:1px solid #1F1F1F; overflow:hidden;">
+  <div style="position:absolute; inset:0; background:repeating-linear-gradient(-45deg,#030303 0,#030303 12px,#060606 12px,#060606 24px); pointer-events:none;"></div>
+  <div style="position:relative; z-index:2; max-width:600px; margin:0 auto; display:flex; flex-direction:column; align-items:center; gap:20px;">
+    <div style="width:32px; height:1px; background:var(--kkt-accent);"></div>
+    <p style="font-family:'Inter',sans-serif; font-size:10px; font-weight:700; letter-spacing:0.28em; text-transform:uppercase; color:var(--kkt-accent);">JOIN THE WATCH</p>
+    <h2 style="font-family:'Bebas Neue',sans-serif; font-size:clamp(32px,4.5vw,56px); font-weight:400; letter-spacing:0.03em; color:#fff; line-height:1.0; text-transform:uppercase;">ELEVATE THE STANDARD.<br>JOIN THE WATCH.</h2>
+    <p style="font-family:'Inter',sans-serif; font-size:14px; line-height:1.7; color:#A8A8A8; max-width:420px;">Be first to access new drops, field-tested gear, and mission updates. No noise. Just what matters.</p>
+    <form onSubmit="{{ handleSubscribe }}" style="width:100%; margin-top:4px;">
+      <div class="kkt-subscribe-row" style="display:flex; gap:0; width:100%; border:1px solid #333;">
+        <input type="email" placeholder="ENTER YOUR EMAIL" value="{{ email }}" onChange="{{ setEmail }}" style="flex:1; background:transparent; border:none; color:#fff; font-family:'Inter',sans-serif; font-size:12px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; padding:15px 20px; outline:none; min-width:0;" required></input>
+        <button class="kkt-subscribe-btn kkt-cta-shine" type="submit" style="background:var(--kkt-accent); border:none; color:#fff; padding:15px 28px; font-family:'Inter',sans-serif; font-size:11px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; cursor:pointer; white-space:nowrap; flex-shrink:0; transition:background 0.2s;" style-hover="background:var(--kkt-accent-dark);">SUBSCRIBE</button>
+      </div>
+    </form>
+    <sc-if value="{{ subscribed }}" hint-placeholder-val="{{ false }}">
+      <p style="font-family:'Inter',sans-serif; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; color:var(--kkt-accent);">✓ &nbsp;SUBSCRIBED. STAY KLOSE.</p>
+    </sc-if>
+    <div style="display:flex; align-items:center; gap:14px; margin-top:8px;">
+      <div style="width:32px; height:1px; background:#1F1F1F;"></div>
+      <a href="#" style="display:flex; align-items:center; justify-content:center; width:34px; height:34px; border:1px solid #333; color:#fff; font-family:'Inter',sans-serif; font-size:13px; font-weight:700; transition:all 0.2s;" style-hover="border-color:var(--kkt-accent); color:var(--kkt-accent);">f</a>
+      <a href="#" style="display:flex; align-items:center; justify-content:center; width:34px; height:34px; border:1px solid #333; color:#fff; transition:all 0.2s;" style-hover="border-color:var(--kkt-accent); color:var(--kkt-accent);">
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round">
+          <rect x="1" y="1" width="11" height="11" rx="2.5"></rect>
+          <circle cx="6.5" cy="6.5" r="2.3"></circle>
+          <circle cx="9.7" cy="3.3" r="0.6" fill="currentColor" stroke="none"></circle>
+        </svg>
+      </a>
+      <div style="width:32px; height:1px; background:#1F1F1F;"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── 12 · FOOTER ─── (rebalanced — 4 equal columns) -->
+<footer style="background:#000000; border-top:1px solid rgba(255,255,255,0.28); padding:72px 40px 0;">
+  <div style="max-width:1280px; margin:0 auto;">
+    <div class="kkt-footer-row" style="display:flex; justify-content:space-between; gap:40px; padding-bottom:64px; border-bottom:1px solid rgba(255,255,255,0.28);">
+      <!-- Brand col -->
+      <div style="flex:1.4; min-width:0; display:flex; flex-direction:column; gap:18px;">
+        <img src="./uploads/pasted-1782515131485-0.png" alt="Klose Kombat Tactical" style="height:82px; width:auto; align-self:flex-start; display:block;"></img>
+        <p style="font-family:'Inter',sans-serif; font-size:13px; line-height:1.7; color:#fff;">No noise. Just service driven purpose.</p>
+        <div style="display:flex; gap:8px; margin-top:4px;">
+          <a href="#" style="display:flex; align-items:center; justify-content:center; width:32px; height:32px; border:1px solid rgba(255,255,255,0.28); color:#fff; font-family:'Inter',sans-serif; font-size:12px; font-weight:700; transition:all 0.2s;" style-hover="border-color:var(--kkt-accent); color:var(--kkt-accent);">f</a>
+          <a href="#" style="display:flex; align-items:center; justify-content:center; width:32px; height:32px; border:1px solid rgba(255,255,255,0.28); color:#fff; transition:all 0.2s;" style-hover="border-color:var(--kkt-accent); color:var(--kkt-accent);">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round">
+              <rect x="1" y="1" width="10" height="10" rx="2.5"></rect>
+              <circle cx="6" cy="6" r="2.2"></circle>
+              <circle cx="8.8" cy="3.2" r="0.5" fill="currentColor" stroke="none"></circle>
+            </svg>
+          </a>
+          <a href="#" style="display:flex; align-items:center; justify-content:center; width:32px; height:32px; border:1px solid rgba(255,255,255,0.28); color:#fff; font-family:'Inter',sans-serif; font-size:11px; font-weight:700; transition:all 0.2s;" style-hover="border-color:var(--kkt-accent); color:var(--kkt-accent);">𝕏</a>
+          <a href="#" style="display:flex; align-items:center; justify-content:center; width:32px; height:32px; border:1px solid rgba(255,255,255,0.28); color:#fff; font-family:'Inter',sans-serif; font-size:10px; font-weight:700; transition:all 0.2s;" style-hover="border-color:var(--kkt-accent); color:var(--kkt-accent);">TT</a>
+        </div>
+      </div>
+      <!-- SHOP col -->
+      <div style="flex:1; min-width:0; display:flex; flex-direction:column; gap:14px;">
+        <p style="font-family:'Bebas Neue',sans-serif; font-size:15px; letter-spacing:0.1em; color:#fff; margin-bottom:4px;">SHOP</p>
+        <a href="#" style="font-family:'Inter',sans-serif; font-size:12px; color:#fff; transition:color 0.15s;" style-hover="color:#fff;">All Products</a>
+        <a href="#" style="font-family:'Inter',sans-serif; font-size:12px; color:#fff; transition:color 0.15s;" style-hover="color:#fff;">Mission Essentials</a>
+        <a href="#" style="font-family:'Inter',sans-serif; font-size:12px; color:#fff; transition:color 0.15s;" style-hover="color:#fff;">Apparel</a>
+        <a href="#" style="font-family:'Inter',sans-serif; font-size:12px; color:#fff; transition:color 0.15s;" style-hover="color:#fff;">Footwear</a>
+        <a href="#" style="font-family:'Inter',sans-serif; font-size:12px; color:#fff; transition:color 0.15s;" style-hover="color:#fff;">Accessories</a>
+      </div>
+      <!-- COMPANY col -->
+      <div style="flex:1; min-width:0; display:flex; flex-direction:column; gap:14px;">
+        <p style="font-family:'Bebas Neue',sans-serif; font-size:15px; letter-spacing:0.1em; color:#fff; margin-bottom:4px;">COMPANY</p>
+        <a href="#" style="font-family:'Inter',sans-serif; font-size:12px; color:#fff; transition:color 0.15s;" style-hover="color:#fff;">Our Mission</a>
+        <a href="#" style="font-family:'Inter',sans-serif; font-size:12px; color:#fff; transition:color 0.15s;" style-hover="color:#fff;">Who We Serve</a>
+        <a href="#" style="font-family:'Inter',sans-serif; font-size:12px; color:#fff; transition:color 0.15s;" style-hover="color:#fff;">Journal</a>
+        <a href="#" style="font-family:'Inter',sans-serif; font-size:12px; color:#fff; transition:color 0.15s;" style-hover="color:#fff;">Careers</a>
+        <a href="#" style="font-family:'Inter',sans-serif; font-size:12px; color:#fff; transition:color 0.15s;" style-hover="color:#fff;">Press</a>
+      </div>
+      <!-- SUPPORT col -->
+      <div style="flex:1; min-width:0; display:flex; flex-direction:column; gap:14px;">
+        <p style="font-family:'Bebas Neue',sans-serif; font-size:15px; letter-spacing:0.1em; color:#fff; margin-bottom:4px;">SUPPORT</p>
+        <a href="#" style="font-family:'Inter',sans-serif; font-size:12px; color:#fff; transition:color 0.15s;" style-hover="color:#fff;">Contact Us</a>
+        <a href="#" style="font-family:'Inter',sans-serif; font-size:12px; color:#fff; transition:color 0.15s;" style-hover="color:#fff;">FAQ</a>
+        <a href="#" style="font-family:'Inter',sans-serif; font-size:12px; color:#fff; transition:color 0.15s;" style-hover="color:#fff;">Shipping Policy</a>
+        <a href="#" style="font-family:'Inter',sans-serif; font-size:12px; color:#fff; transition:color 0.15s;" style-hover="color:#fff;">Returns</a>
+        <a href="#" style="font-family:'Inter',sans-serif; font-size:12px; color:#fff; transition:color 0.15s;" style-hover="color:#fff;">Size Guide</a>
+      </div>
+    </div>
+    <div style="display:flex; align-items:center; justify-content:space-between; padding:24px 0; gap:24px; flex-wrap:wrap;">
+      <div style="display:flex; flex-direction:column; gap:6px;">
+        <p style="font-family:'Inter',sans-serif; font-size:10px; color:#fff; letter-spacing:0.06em; text-transform:uppercase;">© 2026 KLOSE KOMBAT TACTICAL. ALL RIGHTS RESERVED.</p>
+        <p style="font-family:'Inter',sans-serif; font-size:10px; color:#fff; letter-spacing:0.06em; text-transform:uppercase;">Developed by Sun Skill Tech</p>
+      </div>
+      <div style="display:flex; gap:8px; align-items:center;">
+        <div style="border:1px solid rgba(255,255,255,0.28); padding:4px 8px;"><span style="font-family:'Inter',sans-serif; font-size:9px; font-weight:700; letter-spacing:0.06em; color:#fff;">VISA</span></div>
+        <div style="border:1px solid rgba(255,255,255,0.28); padding:4px 8px;"><span style="font-family:'Inter',sans-serif; font-size:8px; font-weight:700; letter-spacing:0.04em; color:#fff;">MASTERCARD</span></div>
+        <div style="border:1px solid rgba(255,255,255,0.28); padding:4px 8px;"><span style="font-family:'Inter',sans-serif; font-size:9px; font-weight:700; letter-spacing:0.06em; color:#fff;">AMEX</span></div>
+        <div style="border:1px solid rgba(255,255,255,0.28); padding:4px 8px;"><span style="font-family:'Inter',sans-serif; font-size:9px; font-weight:700; letter-spacing:0.06em; color:#fff;">PAYPAL</span></div>
+        <div style="border:1px solid rgba(255,255,255,0.28); padding:4px 8px;"><span style="font-family:'Inter',sans-serif; font-size:8px; font-weight:700; letter-spacing:0.04em; color:#fff;">DISCOVER</span></div>
+      </div>
+    </div>
+  </div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;$preview&quot;: { &quot;width&quot;: 1280, &quot;height&quot;: 900 }
+}">
+class Component extends DCLogic {
+  state = {
+    mobileMenuOpen: false,
+    email: '',
+    subscribed: false,
+    sliderIndex: 0,
+    accentMode: 'olive',
+  };
+
+  renderVals() {
+    const productCount = 4;
+    const yellowMode = this.state.accentMode === 'yellow';
+
+    return {
+      mobileMenuOpen: this.state.mobileMenuOpen,
+      toggleMenu: () => this.setState(s => ({ mobileMenuOpen: !s.mobileMenuOpen })),
+      email: this.state.email,
+      setEmail: e => this.setState({ email: e.target.value }),
+      handleSubscribe: e => {
+        e.preventDefault();
+        if (this.state.email) {
+          this.setState({ subscribed: true, email: '' });
+          setTimeout(() => this.setState({ subscribed: false }), 5000);
+        }
+      },
+      subscribed: this.state.subscribed,
+      accentColor: yellowMode ? '#F5C200' : '#4c4c36',
+      accentDark: yellowMode ? '#d4a800' : '#3f3f2d',
+      accentRgb: yellowMode ? '245,194,0' : '76,76,54',
+      accentContrast: yellowMode ? '#000' : '#fff',
+      accentLabel: yellowMode ? 'Switch to olive' : 'Switch to yellow',
+      toggleAccent: () => this.setState(s => ({ accentMode: s.accentMode === 'yellow' ? 'olive' : 'yellow' })),
+      sliderOffsetPct: this.state.sliderIndex * 25,
+      slidePrev: () => this.setState(s => ({ sliderIndex: (s.sliderIndex - 1 + productCount) % productCount })),
+      slideNext: () => this.setState(s => ({ sliderIndex: (s.sliderIndex + 1) % productCount })),
+    };
+  }
+}
+</script>
+</body>
+</html>
